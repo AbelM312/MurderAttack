@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Main Menu.unity
     guid: 97fce2c8c572fdc46b3ada8274384395
   - enabled: 1
+    path: Assets/Scenes/Abels.unity
+    guid: 493e6c5b1ee682144995d8c8cf4b0ad1
+  - enabled: 1
     path: Assets/Scenes/EldarsDomain!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!.unity
     guid: b9825f5ba5d92df4b84a8548bc197504
   - enabled: 1
