@@ -397,7 +397,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 671303354}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.04, y: 3.32, z: 0}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 0.6818, y: 0.6818, z: 0.6818}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -416,8 +416,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c151be37cdc4a46bf4cd39dfed4899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 0.5
   range: 10.5
+  attackSpeed: 3
+  retreatSpeed: 2
+  destination: {x: 0, y: -3.64}
+  switchIntervalMin: 5
+  switchIntervalMax: 10
+  destinationReached: 0
+  pauseDuration: 0.5
 --- !u!50 &671303358
 Rigidbody2D:
   serializedVersion: 4
