@@ -44,6 +44,6 @@ public class CountdownTimer : MonoBehaviour
         isGameOver = true;
 
         // Add any additional actions or scene transitions here
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
