@@ -16,7 +16,7 @@ public class PlayerAttack : MonoBehaviour
         Vector2 movementDirection = new Vector2(horizontalInput, verticalInput).normalized;
 
         // Check for attack input
-        if (Input.GetButtonDown("T"))
+        if (Input.GetButtonDown("Fire1"))
         {
             Attack(movementDirection);
         }
@@ -24,14 +24,23 @@ public class PlayerAttack : MonoBehaviour
 
     void Attack(Vector2 direction)
     {
-        // Create an overlap circle to check for enemies in the attack range
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+        // Calculate the position for the overlap circle based on player's position and movement direction
+        Vector2 attackPosition = (Vector2)transform.position + direction * attackRange;
 
-        foreach (Collider2D enemy in hitEnemies)
+        // Debugging: Print the calculated attack position to the console
+        Debug.Log("Calculated Attack Position: " + attackPosition);
+
+        // Create an overlap circle to check for a single enemy in the calculated attack position
+        Collider2D hitEnemy = Physics2D.OverlapCircle(attackPosition, attackRange, enemyLayer);
+
+        if (hitEnemy != null)
         {
-            Destroy(gameObject);
+            // Debugging: Print the name and position of the detected enemy
+            Debug.Log("Detected enemy: " + hitEnemy.name + " at position: " + hitEnemy.transform.position);
+
             // You can implement damage logic here or call a function on the enemy script
-            Debug.Log("Attacked: " + enemy.name);
+            // For example, destroy the enemy:
+            Destroy(hitEnemy.gameObject);
         }
     }
 
@@ -42,6 +51,6 @@ public class PlayerAttack : MonoBehaviour
             return;
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        Gizmos.DrawWireSphere((Vector2)transform.position + (Vector2)attackPoint.localPosition, attackRange);
     }
 }
