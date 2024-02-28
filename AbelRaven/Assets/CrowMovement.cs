@@ -10,40 +10,78 @@ public class CrowMovement : MonoBehaviour
     public float attackSpeed = 5f;
     public float retreatSpeed = 5f;
 
-    public Vector2 destination = new Vector2(10f, 0f);  // Destination position
+    public Vector2 targetPosition;  // Destination position
     public float switchIntervalMin = 10f;  // Minimum time before switching behavior
     public float switchIntervalMax = 20f;  // Maximum time before switching behavior
 
-    private bool moveToDestination = false;  // Flag to determine the current behavior
+    public bool moveToTarget = false;  // Flag to determine the current behavior
     private float switchTime;
-    public bool destinationReached = false;
-    public float pauseDuration = 1f;      // Duration of the pause
+    public bool targetReached = false;
+    public float pauseDuration = 5f;      // Duration of the pause
+    public float pauseForDeduction = 1f;
 
     private Vector2 startingPosition;  // Initial position of the enemy
 
+    //public Food food;
+    public float score;
+    public float startingScore = 1000;
+    public float scoreDeduction = 0.001f;
+    public bool scoreToDeduct;
+    public bool scoreStable;
+    public int deductionsMade;
+
     void Start()
     {
-        startingPosition = new Vector2 (0, 3); // Save the initial x position
+
+        startingPosition = new Vector2(0, 3); // Save the initial x position
 
         switchTime = Time.time + Random.Range(switchIntervalMin, switchIntervalMax);
+
+        score = startingScore;
+
+        scoreToDeduct = false;
+
+        scoreStable = true;
+
+        deductionsMade = 0;
     }
 
     void Update()
     {
+
         if (Time.time >= switchTime)
         {
             // Switch behavior
-            moveToDestination = true;
+            moveToTarget = true;
             //switchTime = Time.time + Random.Range(switchIntervalMin, switchIntervalMax);
 
-            if (moveToDestination)
+            if (moveToTarget)
             {
                 StartCoroutine(PauseBeforeMoving());
             }
 
+            if (targetReached && scoreStable)
+            {
+                scoreStable = false;
+
+                /*for (int i = 0; i < 5; i++)
+                {
+
+                    Debug.Log("Pause started");
+
+                    StartCoroutine(PauseBeforeDeducting());
+
+                }*/
+
+                Debug.Log("Pause started");
+
+                StartCoroutine(PauseBeforeDeducting());
+
+            }
+
         }
 
-        if (moveToDestination)
+        if (moveToTarget)
         {
             MoveToDestination();
         }
@@ -51,26 +89,42 @@ public class CrowMovement : MonoBehaviour
         {
             MoveBackAndForth();
         }
+
+        /*if (deductingScore)
+        {
+
+            Debug.Log("Pause started");
+
+            StartCoroutine(PauseBeforeDeducting());
+
+            deductingScore = false;
+
+        }*/
+
     }
 
     void MoveToDestination()
     {
-        
-        if(destinationReached == false)
+
+        if (targetReached == false)
         {
 
             // Move towards the destination position
-            transform.position = Vector2.MoveTowards(transform.position, destination, attackSpeed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, targetPosition, attackSpeed * Time.deltaTime);
 
         }
 
         // Check if the enemy has reached the destination
-        if ((Vector2)transform.position == destination)
+        if ((Vector2)transform.position == targetPosition)
         {
             // Run specific code once the enemy reaches the destination
-            Debug.Log("Enemy has reached the destination!");
+            //Debug.Log("Enemy has reached the target!");
             // Add your custom code here
-            destinationReached = true;
+            targetReached = true;
+
+            moveToTarget = false;
+
+            //deductingScore = true;
 
             // Run specific code once the enemy reaches the destination
             StartCoroutine(PauseBeforeMoving());
@@ -80,38 +134,59 @@ public class CrowMovement : MonoBehaviour
 
     IEnumerator PauseBeforeMoving()
     {
-        Debug.Log("pause initialized");
+        //Debug.Log("pause initialized");
         // Pause for the specified duration
         yield return new WaitForSeconds(pauseDuration);
 
 
         // Continue with the next movement
-        Debug.Log("pause finished");
+        //Debug.Log("pause finished");
 
         MoveBack();
 
     }
 
-    void MoveBack()
+    IEnumerator PauseBeforeDeducting()
     {
 
-        if (destinationReached == true)
+        yield return new WaitForSeconds(pauseForDeduction);
+
+        Debug.Log("Deduction started");
+        
+        DeductScore();
+
+    }
+
+    public void MoveBack()
+    {
+
+        //scoreStable = true;
+
+        deductionsMade = 0;
+
+        if (targetReached == true)
         {
 
             transform.position = Vector2.MoveTowards(transform.position, startingPosition, retreatSpeed * Time.deltaTime);
 
-            Debug.Log("returning");
+            //Debug.Log("returning");
 
         }
 
         if ((Vector2)transform.position == startingPosition)
         {
 
+            //scoreToDeduct = true;
+
+            //FoodTaken();
+
             Debug.Log("Enemy has returned!");
 
-            destinationReached = false;
+            targetReached = false;
 
-            moveToDestination = false;
+            moveToTarget = false;
+
+            scoreStable = true;
 
             switchTime = Time.time + Random.Range(switchIntervalMin, switchIntervalMax);
 
@@ -127,4 +202,57 @@ public class CrowMovement : MonoBehaviour
         // Update the enemy's position
         transform.position = new Vector2(newPosition, transform.position.y);
     }
+
+    public void DeductScore()
+    {
+        //deductingScore = false;
+
+        /*for (int i = 0; i <= 5; i++)
+        {
+
+            if (deductingScore)
+            {
+
+                Debug.Log("deducting score");
+
+                score = score - scoreDeduction;
+
+            }
+
+
+            //Debug.Log("deducting score");
+
+            Debug.Log(i);
+
+            score = score - scoreDeduction;
+
+        }*/
+
+
+        score = score - scoreDeduction;
+    }
+
+    /*public void FoodTaken()
+    {
+
+        if (scoreToDeduct == true)
+        {
+
+            score = score - scoreDeduction;
+
+            scoreToDeduct = false;
+
+        }
+
+        if (score < 0)
+        {
+
+            score = startingScore;
+
+        }
+
+        Debug.Log("Food taken!");
+
+    }*/
+
 }

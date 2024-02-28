@@ -419,12 +419,20 @@ MonoBehaviour:
   speed: 0.5
   range: 10.5
   attackSpeed: 3
-  retreatSpeed: 2
-  destination: {x: 0, y: -3.64}
+  retreatSpeed: 3
+  targetPosition: {x: 0, y: -3.5}
   switchIntervalMin: 5
   switchIntervalMax: 10
-  destinationReached: 0
-  pauseDuration: 0.5
+  moveToTarget: 0
+  targetReached: 0
+  pauseDuration: 5
+  pauseForDeduction: 1
+  score: 0
+  startingScore: 1000
+  scoreDeduction: 1
+  scoreToDeduct: 0
+  scoreStable: 0
+  deductionsMade: 0
 --- !u!50 &671303358
 Rigidbody2D:
   serializedVersion: 4
