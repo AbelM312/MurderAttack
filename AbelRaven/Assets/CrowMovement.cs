@@ -10,6 +10,7 @@ public class CrowMovement : MonoBehaviour
     public float attackSpeed = 5f;
     public float retreatSpeed = 5f;
 
+    public GameObject target1;
     public Vector2 targetPosition;  // Destination position
     public float switchIntervalMin = 10f;  // Minimum time before switching behavior
     public float switchIntervalMax = 20f;  // Maximum time before switching behavior
@@ -34,6 +35,8 @@ public class CrowMovement : MonoBehaviour
     {
 
         startingPosition = new Vector2(0, 3); // Save the initial x position
+
+        targetPosition = new Vector2(target1.transform.position.x, target1.transform.position.y);
 
         switchTime = Time.time + Random.Range(switchIntervalMin, switchIntervalMax);
 
@@ -101,6 +104,12 @@ public class CrowMovement : MonoBehaviour
 
         }*/
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("Collided with: " + collision.gameObject.name);
+        // You can perform any other actions based on the collision here
     }
 
     void MoveToDestination()
