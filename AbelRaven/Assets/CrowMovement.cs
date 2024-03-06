@@ -10,14 +10,18 @@ public class CrowMovement : MonoBehaviour
     public float attackSpeed = 5f;
     public float retreatSpeed = 5f;
 
-    public GameObject target1;
-    public Vector2 targetPosition;  // Destination position
+    public Transform target;
+    public Transform target1;
+    public Transform target2;
+    public Vector2 targetPosition1;  // Destination position
+    public Vector2 targetPosition2;
     public float switchIntervalMin = 10f;  // Minimum time before switching behavior
     public float switchIntervalMax = 20f;  // Maximum time before switching behavior
 
     public bool moveToTarget = false;  // Flag to determine the current behavior
     private float switchTime;
     public bool targetReached = false;
+    public bool targetChoosen;
     public float pauseDuration = 5f;      // Duration of the pause
     public float pauseForDeduction = 1f;
 
@@ -36,11 +40,15 @@ public class CrowMovement : MonoBehaviour
 
         startingPosition = new Vector2(0, 3); // Save the initial x position
 
-        targetPosition = new Vector2(target1.transform.position.x, target1.transform.position.y);
+        targetPosition1 = new Vector2(target1.position.x, target1.position.y);
+
+        targetPosition2 = new Vector2(target2.position.x, target2.position.y);
 
         switchTime = Time.time + Random.Range(switchIntervalMin, switchIntervalMax);
 
         score = startingScore;
+
+        targetChoosen = false;
 
         scoreToDeduct = false;
 
@@ -112,19 +120,53 @@ public class CrowMovement : MonoBehaviour
         // You can perform any other actions based on the collision here
     }
 
+    void ChooseTarget()
+    {
+
+
+
+    }
+
     void MoveToDestination()
     {
 
         if (targetReached == false)
         {
+            if (targetChoosen == false)
+            {
+
+                target = Random.Range(0, 2) == 0 ? target1 : target2;
+
+            }
+
+            // Move towards the chosen target position
+            Vector2 direction = (target.position - transform.position).normalized;
+            transform.Translate(direction * attackSpeed * Time.deltaTime);
 
             // Move towards the destination position
-            transform.position = Vector2.MoveTowards(transform.position, targetPosition, attackSpeed * Time.deltaTime);
+            //transform.position = Vector2.MoveTowards(transform.position, targetPosition1, attackSpeed * Time.deltaTime
+
+            targetChoosen = true;
 
         }
 
         // Check if the enemy has reached the destination
-        if ((Vector2)transform.position == targetPosition)
+        if ((Vector2)transform.position == targetPosition1)
+        {
+            // Run specific code once the enemy reaches the destination
+            //Debug.Log("Enemy has reached the target!");
+            // Add your custom code here
+            targetReached = true;
+
+            moveToTarget = false;
+
+            //deductingScore = true;
+
+            // Run specific code once the enemy reaches the destination
+            StartCoroutine(PauseBeforeMoving());
+        }
+
+        if ((Vector2)transform.position == targetPosition2)
         {
             // Run specific code once the enemy reaches the destination
             //Debug.Log("Enemy has reached the target!");
@@ -192,6 +234,8 @@ public class CrowMovement : MonoBehaviour
             Debug.Log("Enemy has returned!");
 
             targetReached = false;
+
+            targetChoosen = false;
 
             moveToTarget = false;
 
