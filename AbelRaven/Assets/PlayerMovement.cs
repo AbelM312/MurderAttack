@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(transform.position, 0.8f, LayerMask.GetMask("Ground"));
 
         // Log the grounded status for debugging
-        Debug.Log("Grounded: " + isGrounded);
+        //Debug.Log("Grounded: " + isGrounded);
 
         // Get input for horizontal movement
         float horizontalInput = Input.GetAxis("Horizontal");
