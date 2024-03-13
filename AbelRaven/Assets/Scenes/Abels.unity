@@ -316,7 +316,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &287551238
 GameObject:
@@ -794,6 +794,53 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1001262199
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1001262201}
+  - component: {fileID: 1001262200}
+  m_Layer: 0
+  m_Name: EnemySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1001262200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001262199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd7cece9190c65d459ad477882db6e6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 1814344464}
+  numberOfEnemiesToSpawn: 10
+  spawnAreaSize: {x: 10, y: 10}
+--- !u!4 &1001262201
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001262199}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.2734113, y: -0.05136013, z: 0.021660415}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1032843149
 GameObject:
   m_ObjectHideFlags: 0
@@ -1003,7 +1050,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1680800977
 GameObject:
@@ -1088,7 +1135,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1680800981
 BoxCollider2D:
@@ -1309,21 +1356,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c151be37cdc4a46bf4cd39dfed4899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
+  speed: 0.7
   range: 10.5
-  attackSpeed: 3
-  retreatSpeed: 3
-  target1: {fileID: 1660830907}
-  targetPosition: {x: 0, y: -3.5}
+  attackSpeed: 5
+  retreatSpeed: 4
+  target: {fileID: 0}
+  target1: {fileID: 1660830910}
+  target2: {fileID: 1420445530}
+  targetPosition1: {x: 0, y: 0}
+  targetPosition2: {x: 0, y: 0}
   switchIntervalMin: 5
   switchIntervalMax: 10
   moveToTarget: 0
   targetReached: 0
-  pauseDuration: 5
+  targetChoosen: 0
+  pauseDuration: 3
   pauseForDeduction: 1
+  spawnAreaSize: {x: 10, y: 1}
   score: 0
   startingScore: 1000
-  scoreDeduction: 1
+  scoreDeduction: 10
   scoreToDeduct: 0
   scoreStable: 0
   deductionsMade: 0
@@ -1413,7 +1465,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1886903268
 GameObject:
