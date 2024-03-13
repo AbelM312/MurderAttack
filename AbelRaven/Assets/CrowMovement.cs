@@ -25,7 +25,8 @@ public class CrowMovement : MonoBehaviour
     public float pauseDuration = 5f;      // Duration of the pause
     public float pauseForDeduction = 1f;
 
-    private Vector2 startingPosition;  // Initial position of the enemy
+    private Vector2 returnPosition;  // Initial position of the enemy
+    public Vector2 spawnAreaSize = new Vector2(10f, 1f);
 
     //public Food food;
     public float score;
@@ -38,7 +39,7 @@ public class CrowMovement : MonoBehaviour
     void Start()
     {
 
-        startingPosition = new Vector2(0, 3); // Save the initial x position
+        returnPosition = new Vector3(Random.Range(-spawnAreaSize.x / 2f, spawnAreaSize.x / 2f), Random.Range(-spawnAreaSize.y / 2f, spawnAreaSize.y / 2f), 0f);
 
         targetPosition1 = new Vector2(target1.position.x, target1.position.y);
 
@@ -218,13 +219,13 @@ public class CrowMovement : MonoBehaviour
         if (targetReached == true)
         {
 
-            transform.position = Vector2.MoveTowards(transform.position, startingPosition, retreatSpeed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, returnPosition, retreatSpeed * Time.deltaTime);
 
             //Debug.Log("returning");
 
         }
 
-        if ((Vector2)transform.position == startingPosition)
+        if ((Vector2)transform.position == returnPosition)
         {
 
             //scoreToDeduct = true;
@@ -250,7 +251,7 @@ public class CrowMovement : MonoBehaviour
     void MoveBackAndForth()
     {
         // Calculate the new position based on the sine function
-        float newPosition = startingPosition.x + Mathf.Sin(Time.time * speed) * range;
+        float newPosition = returnPosition.x + Mathf.Sin(Time.time * speed) * range;
 
         // Update the enemy's position
         transform.position = new Vector2(newPosition, transform.position.y);
