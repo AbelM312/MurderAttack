@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CrowMovement : MonoBehaviour
 {
-    public float speed = 5f;        // Speed of the enemy
+    private float speed;        // Speed of the enemy
     public float range = 5f;        // Range of movement
     public float attackSpeed = 5f;
     public float retreatSpeed = 5f;
@@ -25,29 +25,29 @@ public class CrowMovement : MonoBehaviour
     public float pauseDuration = 5f;      // Duration of the pause
     public float pauseForDeduction = 1f;
 
-    private Vector2 returnPosition;  // Initial position of the enemy
+    public Vector2 returnPosition;  // Initial position of the enemy
+    public Transform returnY;
     public Vector2 spawnAreaSize = new Vector2(10f, 1f);
 
     //public Food food;
-    public float score;
-    public float startingScore = 1000;
-    public float scoreDeduction = 0.001f;
     public bool scoreToDeduct;
     public bool scoreStable;
     public int deductionsMade;
 
+    public ScoreCounter scoreCounter;
+
     void Start()
     {
 
-        returnPosition = new Vector3(Random.Range(-spawnAreaSize.x / 2f, spawnAreaSize.x / 2f), Random.Range(-spawnAreaSize.y / 2f, spawnAreaSize.y / 2f), 0f);
+        speed = Random.Range(0.455f, 0.715f);
+
+        returnPosition = new Vector3(Random.Range(-spawnAreaSize.x / 2f, spawnAreaSize.x / 2f), returnY.position.y, 0f);
 
         targetPosition1 = new Vector2(target1.position.x, target1.position.y);
 
         targetPosition2 = new Vector2(target2.position.x, target2.position.y);
 
         switchTime = Time.time + Random.Range(switchIntervalMin, switchIntervalMax);
-
-        score = startingScore;
 
         targetChoosen = false;
 
@@ -56,6 +56,8 @@ public class CrowMovement : MonoBehaviour
         scoreStable = true;
 
         deductionsMade = 0;
+
+        scoreCounter = new ScoreCounter();
     }
 
     void Update()
@@ -205,7 +207,9 @@ public class CrowMovement : MonoBehaviour
 
         Debug.Log("Deduction started");
         
-        DeductScore();
+        scoreCounter.ScoreDeduction();
+
+        Debug.Log("Deduction finished");
 
     }
 
@@ -251,7 +255,7 @@ public class CrowMovement : MonoBehaviour
     void MoveBackAndForth()
     {
         // Calculate the new position based on the sine function
-        float newPosition = returnPosition.x + Mathf.Sin(Time.time * speed) * range;
+        float newPosition = returnY.position.x + Mathf.Sin(Time.time * speed) * range;
 
         // Update the enemy's position
         transform.position = new Vector2(newPosition, transform.position.y);
@@ -282,8 +286,6 @@ public class CrowMovement : MonoBehaviour
 
         }*/
 
-
-        score = score - scoreDeduction;
     }
 
     /*public void FoodTaken()
