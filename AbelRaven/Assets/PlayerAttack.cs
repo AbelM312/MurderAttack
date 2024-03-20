@@ -1,3 +1,4 @@
+using System.Globalization;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
@@ -5,6 +6,17 @@ public class PlayerAttack : MonoBehaviour
     public float attackRange = 1.0f;
     public Transform attackPoint;
     public LayerMask enemyLayer;
+    //WinController winController;
+
+    public int numberOfCrows = 10;
+
+
+    private void Start()
+    {
+        
+        //winController = GetComponent<WinController>();
+
+    }
 
     // Update is called once per frame
     void Update()
@@ -20,6 +32,15 @@ public class PlayerAttack : MonoBehaviour
         {
             Attack(movementDirection);
         }
+
+        if (numberOfCrows == 0)
+        {
+
+            YouWin();
+
+        }
+
+        
     }
 
     void Attack(Vector2 direction)
@@ -41,7 +62,16 @@ public class PlayerAttack : MonoBehaviour
             // You can implement damage logic here or call a function on the enemy script
             // For example, destroy the enemy:
             Destroy(hitEnemy.gameObject);
+
+            numberOfCrows --;
         }
+    }
+
+    void YouWin()
+    {
+
+        Debug.Log("You Win!");
+
     }
 
     // Visualize the attack range in the scene view
