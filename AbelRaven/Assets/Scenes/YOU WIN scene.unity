@@ -1066,3 +1066,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Number: 1
   Number2: 0
+  targetSceneName: YOU WIN scene

@@ -8,12 +8,13 @@ public class PlayerAttack : MonoBehaviour
     public LayerMask enemyLayer;
     //WinController winController;
 
-    public int numberOfCrows = 10;
+    public int numberOfCrows;
 
 
     private void Start()
     {
-        
+        numberOfCrows = 10;
+
         //winController = GetComponent<WinController>();
 
     }

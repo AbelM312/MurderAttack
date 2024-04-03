@@ -57,7 +57,7 @@ public class CrowMovement : MonoBehaviour
 
         deductionsMade = 0;
 
-        scoreCounter = new ScoreCounter();
+        
     }
 
     void Update()

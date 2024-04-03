@@ -22,12 +22,14 @@ public class ScoreCounter : MonoBehaviour
         
     }
 
-    public void ScoreDeduction()
+    public float ScoreDeduction()
     {
 
         Debug.Log("Deducting...");
 
         score = score - scoreDeduction;
+
+        return score;
 
     }
 
